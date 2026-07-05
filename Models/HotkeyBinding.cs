@@ -1,3 +1,5 @@
+using EasyBinds.Services;
+
 namespace EasyBinds.Models;
 
 public enum ActionType
@@ -7,7 +9,12 @@ public enum ActionType
     RunCommand,
     OpenWebsite,
     ShowMessage,
-    VolumeMute
+    VolumeMute,
+    MaximizeWindow,
+    MinimizeWindow,
+    ShowDesktop,
+    VolumeUp,
+    VolumeDown
 }
 
 public class HotkeyBinding
@@ -24,12 +31,17 @@ public class HotkeyBinding
 
     public string ActionTypeDisplay => ActionType switch
     {
-        ActionType.LaunchProgram => "Launch Program",
-        ActionType.CloseActiveWindow => "Close Active Window",
-        ActionType.RunCommand => "Run Command",
-        ActionType.OpenWebsite => "Open Website",
-        ActionType.ShowMessage => "Show Message",
-        ActionType.VolumeMute => "Toggle Mute",
+        ActionType.LaunchProgram => L10n._("launch_program"),
+        ActionType.CloseActiveWindow => L10n._("close_window"),
+        ActionType.RunCommand => L10n._("run_command"),
+        ActionType.OpenWebsite => L10n._("open_website"),
+        ActionType.ShowMessage => L10n._("show_message"),
+        ActionType.VolumeMute => L10n._("toggle_mute"),
+        ActionType.MaximizeWindow => L10n._("maximize_window"),
+        ActionType.MinimizeWindow => L10n._("minimize_window"),
+        ActionType.ShowDesktop => L10n._("show_desktop"),
+        ActionType.VolumeUp => L10n._("volume_up"),
+        ActionType.VolumeDown => L10n._("volume_down"),
         _ => ActionType.ToString()
     };
 

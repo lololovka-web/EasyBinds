@@ -47,6 +47,12 @@ public partial class MainWindow : Window
             ApplyLanguageToWindow();
             InitTrayIcon();
             UpdateStartupCheckbox();
+
+            if (App.StartMinimized)
+            {
+                WindowState = WindowState.Minimized;
+                Hide();
+            }
         }
         catch (Exception ex)
         {
@@ -244,7 +250,7 @@ public partial class MainWindow : Window
             if (key == null) return;
 
             if (StartWithWindowsCheck.IsChecked == true)
-                key.SetValue("EasyBinds", $"\"{Environment.ProcessPath}\"");
+                key.SetValue("EasyBinds", $"\"{Environment.ProcessPath}\" --minimized");
             else
                 key.DeleteValue("EasyBinds", false);
         }

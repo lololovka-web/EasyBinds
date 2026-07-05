@@ -18,8 +18,18 @@ public class ActionExecutor
     [DllImport("user32.dll")]
     private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
+    [DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetShellWindow();
+
     private const uint WM_CLOSE = 0x0010;
     private const uint KEYEVENTF_KEYUP = 0x0002;
+    private const int SW_MAXIMIZE = 3;
+    private const int SW_MINIMIZE = 6;
+    private const int SW_RESTORE = 9;
+    private const int SW_SHOWMINNOACTIVE = 7;
 
     public void Execute(HotkeyBinding binding)
     {
@@ -42,6 +52,21 @@ public class ActionExecutor
                 break;
             case ActionType.VolumeMute:
                 ToggleMute();
+                break;
+            case ActionType.MaximizeWindow:
+                MaximizeWindow();
+                break;
+            case ActionType.MinimizeWindow:
+                MinimizeWindow();
+                break;
+            case ActionType.ShowDesktop:
+                ShowDesktop();
+                break;
+            case ActionType.VolumeUp:
+                VolumeUp();
+                break;
+            case ActionType.VolumeDown:
+                VolumeDown();
                 break;
         }
     }
@@ -117,5 +142,39 @@ public class ActionExecutor
     {
         keybd_event(0xAD, 0, 0, UIntPtr.Zero);
         keybd_event(0xAD, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+    }
+
+    private static void MaximizeWindow()
+    {
+        IntPtr hWnd = GetForegroundWindow();
+        if (hWnd != IntPtr.Zero && hWnd != GetShellWindow())
+            ShowWindow(hWnd, SW_MAXIMIZE);
+    }
+
+    private static void MinimizeWindow()
+    {
+        IntPtr hWnd = GetForegroundWindow();
+        if (hWnd != IntPtr.Zero && hWnd != GetShellWindow())
+            ShowWindow(hWnd, SW_MINIMIZE);
+    }
+
+    private static void ShowDesktop()
+    {
+        keybd_event(0x5B, 0, 0, UIntPtr.Zero);
+        keybd_event(0x44, 0, 0, UIntPtr.Zero);
+        keybd_event(0x44, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+        keybd_event(0x5B, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+    }
+
+    private static void VolumeUp()
+    {
+        keybd_event(0xAF, 0, 0, UIntPtr.Zero);
+        keybd_event(0xAF, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
+    }
+
+    private static void VolumeDown()
+    {
+        keybd_event(0xAE, 0, 0, UIntPtr.Zero);
+        keybd_event(0xAE, 0, KEYEVENTF_KEYUP, UIntPtr.Zero);
     }
 }

@@ -154,7 +154,8 @@
         </Border>
 
         <TextBlock Name="ActionTypeLabel" Grid.Row="2"
-                   FontSize="13" Margin="0,14,0,6"/>
+                   FontSize="13" Margin="0,14,0,6"
+                   Foreground="{DynamicResource TextBrush}"/>
 
         <ComboBox Grid.Row="3" Name="ActionTypeBox"
                   SelectedIndex="0"

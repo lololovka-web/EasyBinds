@@ -19,9 +19,8 @@ public partial class AddBindingWindow : Window
     public AddBindingWindow(HotkeyBinding? existing)
     {
         InitializeComponent();
-
         ApplyLocalization();
-        BrowseButton.Visibility = Visibility.Collapsed;
+        UpdateParamUI(GetSelectedActionType());
 
         if (existing != null)
             LoadExisting(existing);
@@ -51,6 +50,16 @@ public partial class AddBindingWindow : Window
             { Tag = "ShowMessage", Content = L10n._("show_message") });
         ActionTypeBox.Items.Add(new System.Windows.Controls.ComboBoxItem
             { Tag = "VolumeMute", Content = L10n._("toggle_mute") });
+        ActionTypeBox.Items.Add(new System.Windows.Controls.ComboBoxItem
+            { Tag = "MaximizeWindow", Content = L10n._("maximize_window") });
+        ActionTypeBox.Items.Add(new System.Windows.Controls.ComboBoxItem
+            { Tag = "MinimizeWindow", Content = L10n._("minimize_window") });
+        ActionTypeBox.Items.Add(new System.Windows.Controls.ComboBoxItem
+            { Tag = "ShowDesktop", Content = L10n._("show_desktop") });
+        ActionTypeBox.Items.Add(new System.Windows.Controls.ComboBoxItem
+            { Tag = "VolumeUp", Content = L10n._("volume_up") });
+        ActionTypeBox.Items.Add(new System.Windows.Controls.ComboBoxItem
+            { Tag = "VolumeDown", Content = L10n._("volume_down") });
         ActionTypeBox.SelectedIndex = 0;
     }
 
@@ -202,6 +211,11 @@ public partial class AddBindingWindow : Window
                 break;
             case ActionType.CloseActiveWindow:
             case ActionType.VolumeMute:
+            case ActionType.MaximizeWindow:
+            case ActionType.MinimizeWindow:
+            case ActionType.ShowDesktop:
+            case ActionType.VolumeUp:
+            case ActionType.VolumeDown:
                 ParamLabel.Text = L10n._("no_param");
                 ParamBox.Visibility = Visibility.Collapsed;
                 BrowseButton.Visibility = Visibility.Collapsed;
@@ -274,6 +288,11 @@ public partial class AddBindingWindow : Window
         {
             ActionType.CloseActiveWindow => false,
             ActionType.VolumeMute => false,
+            ActionType.MaximizeWindow => false,
+            ActionType.MinimizeWindow => false,
+            ActionType.ShowDesktop => false,
+            ActionType.VolumeUp => false,
+            ActionType.VolumeDown => false,
             _ => true
         };
     }

@@ -59,9 +59,14 @@ public partial class App : System.Windows.Application
         L10n.Lang = lang;
     }
 
+    public static bool StartMinimized { get; private set; }
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        if (e.Args.Contains("--minimized"))
+            StartMinimized = true;
 
         var theme = "dark";
         var lang = "en";

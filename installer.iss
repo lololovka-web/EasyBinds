@@ -19,8 +19,8 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
-Source: "bin\Debug\net10.0-windows\EasyBinds.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "bin\Debug\net10.0-windows\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "bin\Release\net10.0-windows\EasyBinds.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bin\Release\net10.0-windows\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Icons]
 Name: "{group}\EasyBinds"; Filename: "{app}\EasyBinds.exe"
