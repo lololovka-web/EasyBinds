@@ -165,7 +165,7 @@
             <TextBlock Name="ParamLabel" VerticalAlignment="Center"
                        MinWidth="110" FontSize="13"/>
             <TextBox Name="ParamBox" Width="240" Margin="6,0" Height="30"/>
-            <Button Name="BrowseButton" Width="100" Margin="6,0,0,0"
+            <Button Name="BrowseButton" Width="100" Height="30" Margin="6,0,0,0"
                     Click="BrowseButton_Click"/>
         </StackPanel>
 
