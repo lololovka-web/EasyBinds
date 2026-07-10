@@ -17,6 +17,7 @@ public partial class MainWindow : Window
     private NotifyIconWrapper? _trayIcon;
     private List<HotkeyBinding> _bindings = new();
     private string _currentTheme = "dark";
+    private bool _isExiting;
 
     public MainWindow()
     {
@@ -90,8 +91,8 @@ public partial class MainWindow : Window
             _trayIcon.ShowClicked += () => Dispatcher.Invoke(ShowWindow);
             _trayIcon.ExitClicked += () => Dispatcher.Invoke(() =>
             {
-                _trayIcon?.Dispose();
-                Application.Current.Shutdown();
+                _isExiting = true;
+                Close();
             });
             _trayIcon.Show();
         }
@@ -113,6 +114,12 @@ public partial class MainWindow : Window
 
     private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
     {
+        if (_isExiting)
+        {
+            SaveBindings();
+            _trayIcon?.Dispose();
+            return;
+        }
         e.Cancel = true;
         WindowState = WindowState.Minimized;
         Hide();
@@ -142,6 +149,11 @@ public partial class MainWindow : Window
     private HotkeyBinding? GetSelectedBinding()
     {
         return BindingsList.SelectedItem as HotkeyBinding;
+    }
+
+    private void BindingCheckbox_Click(object sender, RoutedEventArgs e)
+    {
+        SaveBindings();
     }
 
     private void AddBinding_Click(object sender, RoutedEventArgs e)
